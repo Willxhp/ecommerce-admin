@@ -1,19 +1,14 @@
-# vue_management_system
+# 后台管理项目说明
 
-## Project setup
-```
-npm install
-```
+本项目基于Vue3.0+ElementUI Plus开发。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 项目架构
 
-### Compiles and minifies for production
-```
-npm run build
-```
+`@/utils/index.js`导出一个axios函数，在`@/api/index.js`中封装调用接口的函数，每个函数只负责调用一个接口。
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 页面说明
+
+### 注册页面register
+
+### 登录页面login
+
