@@ -1,4 +1,5 @@
-import request from "@/utils";
+import request from "@/utils"
+import store from '@/store'
 
 /**
  * 注册接口
@@ -30,5 +31,25 @@ export const loginAPI = ({ username, password }) => {
       username,
       password
     }
+  })
+}
+
+/**
+ * 获取用户信息接口
+ * @returns Promise对象
+ */
+export const getUserInfoAPI = () => {
+  return request({
+    url: 'my/userinfo',
+  })
+}
+
+/**
+ * 获取左侧菜单栏信息
+ * @returns Promise对象
+ */
+export const getMenuListAPI = () => {
+  return request({
+    url: '/my/menus',
   })
 }
