@@ -6,26 +6,28 @@
         <!-- 左侧的logo -->
         <img src="@/assets/images/bnu_logo.png" alt="" class="logo" />
         <!-- <img src="@/assets/images/login_title.png" alt="" /> -->
-        <span style="color: #fff; font-size: 30px;">学 生 后 台 管 理 系 统</span>
+        <!-- <span style="color: #fff; font-size: 30px;">学 生 论 坛 后 台 管 理 系 统</span> -->
+        <img src="@/assets/images/bnu_logo1.png" alt="" class="middle-logo">
         <!-- 右侧菜单栏 -->
-        <el-menu mode="horizontal" background-color="#23262E" text-color="#fff" active-text-color="#409EFF" :ellipsis="false">
+        <el-menu mode="horizontal" background-color="#104984" text-color="#fff"  active-text-color="#409EFF" :ellipsis="false" >
           <el-sub-menu index="1">
             <template #title>
               <!-- 头像 -->
-              <img src="@/assets/logo.png" alt="" class="avatar" />
+              <img v-if="userPic" :src="userPic" alt="" class="avatar" />
+              <img v-else src="@/assets/images/avatar.jpg" alt="" class="avatar" />
               <span>个人中心</span>
             </template>
-            <el-menu-item index="1-1">
+            <el-menu-item index="/user-info">
               <el-icon>
                 <Operation />
               </el-icon><span>基本资料</span>
             </el-menu-item>
-            <el-menu-item index="1-2">
+            <el-menu-item index="/user-avatar">
               <el-icon>
                 <Camera />
               </el-icon><span>更换头像</span>
             </el-menu-item>
-            <el-menu-item index="1-3">
+            <el-menu-item index="/user-pwd">
               <el-icon>
                 <Key />
               </el-icon><span>重置密码</span>
@@ -49,7 +51,7 @@
             <span>欢迎&nbsp;&nbsp;{{ nickname || username }}</span>
           </div>
           <!-- 左侧菜单栏 -->
-          <el-menu active-text-color="#409EFF" @open="handleOpen" @close="handleClose" background-color="#23262E" class="el-menu-vertical-demo" default-active="/home" text-color="#fff" router unique-opened>
+          <el-menu active-text-color="#409EFF" background-color="#104984" class="el-menu-vertical-demo" :default-active="path" text-color="#fff" router unique-opened>
             <template v-for="item in menu">
               <el-menu-item :index="item.indexPath" v-if="!item.children" :key="item.indexPath">
                 <el-icon>
@@ -65,14 +67,17 @@
                   <span style="font-size: 14px;">{{ item.title }}</span>
                 </template>
                 <el-menu-item v-for="obj in item.children" :index="obj.indexPath" :key="obj.indexPath">
-                  <span style="font-size: 14px;">{{ obj.title }}</span></el-menu-item>
+                  <span style="font-size: 14px;">{{ obj.title }}</span>
+                </el-menu-item>
               </el-sub-menu>
             </template>
           </el-menu>
         </el-aside>
         <el-container>
           <!-- 页面主体区域 -->
-          <el-main>Main</el-main>
+          <el-main>
+            <router-view></router-view>
+          </el-main>
           <!-- 底部footer区域 -->
           <el-footer>@ 北京师范大学 https://www.bnu.edu.cn</el-footer>
         </el-container>
@@ -88,7 +93,7 @@ export default {
 </script>
 
 <script setup>
-import { useStore } from 'vuex'
+import { useStore, toRef } from 'vuex'
 import { useRouter } from 'vue-router'
 import { computed, reactive } from 'vue'
 import { getMenuListAPI } from '@/api'
@@ -105,6 +110,9 @@ const updateUserInfo = (value) => store.commit('updateUserInfo', value)
 const username = computed(() => store.getters.username)
 const nickname = computed(() => store.getters.nickname)
 const userPic = computed(() => store.getters.userPic)
+
+// 获取当前路由地址
+const path = computed(() => router.currentRoute.value.path)
 // 退出登录的点击事件
 const logoutFn = () => {
   // 用户点击退出后弹出提示框询问是否确认退出
@@ -135,8 +143,6 @@ const getMenuList = async () => {
 }
 getMenuList()
 
-const handleOpen = (key, keyPath) => { }
-const handleClose = (key, keyPath) => { }
 </script>
 
 <style lang="less" scoped>
@@ -144,10 +150,11 @@ const handleClose = (key, keyPath) => { }
   height: 100%;
   .el-header,
   .el-aside {
-    background-color: #23262e;
+    background-color: #104984;
   }
 
   .el-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding: 0;
@@ -164,12 +171,22 @@ const handleClose = (key, keyPath) => { }
       margin-right: 10px;
       background-color: #fff;
     }
+
+    .middle-logo {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      z-index: 999;
+    }
   }
 
   .el-main {
     height: 0;
     background-color: #f2f2f2;
     overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .el-footer {
@@ -181,6 +198,8 @@ const handleClose = (key, keyPath) => { }
   }
 
   .el-aside {
+    overflow: hidden;
+
     .user-info {
       height: 70px;
       border-top: 1px solid #000;

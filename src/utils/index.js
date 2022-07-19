@@ -25,7 +25,7 @@ myAxios.interceptors.response.use(
   },
   error => {
     // 返回401状态码说明token过期，清除vuex中保存的信息并且强制跳转至登录页面
-    if (error.response.status === 401) {
+    if (error.response.status === 401 && (store.state.token || store.state.userInfo.username)) {
       store.commit('updateToken', '')
       store.commit('updateUserInfo', {})
       router.push('/login')

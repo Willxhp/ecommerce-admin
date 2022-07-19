@@ -65,7 +65,7 @@ const loginFn = () => {
       // 更新token
       updateToken(data.token)
       // 跳转至layout页面
-      router.push('/layout')
+      router.push('/')
     } else {
       return false
     }

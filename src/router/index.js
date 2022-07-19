@@ -4,7 +4,30 @@ import store from '@/store'
 const routes = [
   {
     path: '/',
-    redirect: '/login',
+    component: () => import('@/views/Layout'),
+    redirect: '/home',
+    children: [
+      {
+        path: 'home',
+        component: () => import('@/views/Home'),
+      },
+      {
+        path: 'user-info',
+        component: () => import('@/views/User/UserInfo.vue')
+      },
+      {
+        path: 'user-avatar',
+        component: () => import('@/views/User/UserAvatar.vue')
+      },
+      {
+        path: 'user-pwd',
+        component: () => import('@/views/User/UserPwd.vue')
+      },
+      {
+        path: 'art-cate',
+        component: () => import('@/views/Article/ArtCate.vue')
+      }
+    ],
   },
   {
     path: '/register',
@@ -13,10 +36,6 @@ const routes = [
   {
     path: '/login',
     component: () => import('@/views/Login'),
-  },
-  {
-    path: '/layout',
-    component: () => import('@/views/Layout'),
   },
 ]
 
