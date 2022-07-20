@@ -26,6 +26,10 @@ const routes = [
       {
         path: 'art-cate',
         component: () => import('@/views/Article/ArtCate.vue')
+      },
+      {
+        path: 'art-list',
+        component: () => import('@/views/Article/ArtList.vue')
       }
     ],
   },

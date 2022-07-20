@@ -111,8 +111,75 @@ export const updateUserPwdAPI = ({ old_pwd, new_pwd, re_pwd }) => {
   })
 }
 
+/**
+ * 获取文章分类列表
+ * @returns Promise对象
+ */
 export const getCateListAPI = () => {
   return request({
     url: '/my/cate/list'
+  })
+}
+
+/**
+ * 增加文章分类列表
+ * @param {*} param0 { cate_name: 分类名称, cate_alias: 分类别名 }
+ * @returns Promise对象
+ */
+export const addCateListAPI = ({ cate_name, cate_alias }) => {
+  return request({
+    url: '/my/cate/add',
+    method: 'POST',
+    data: {
+      cate_name,
+      cate_alias
+    }
+  })
+}
+
+/**
+ * 更新文章分类
+ * @param {*} param0 { id: 文章分类id, cate_name: 分类名称, cate_alias: 分类别名 }
+ * @returns Promise对象
+ */
+export const updateCateListAPI = ({ id, cate_name, cate_alias }) => {
+  return request({
+    url: '/my/cate/info',
+    method: 'PUT',
+    data: {
+      id,
+      cate_name,
+      cate_alias
+    }
+  })
+}
+
+/**
+ * 删除文章分类
+ * @param {*} id 文章分类id
+ * @returns 
+ */
+export const deleteCateListAPI = (id) => {
+  return request({
+    url: '/my/cate/del',
+    method: 'DELETE',
+    params: {
+      id
+    }
+  })
+}
+
+/**
+ * 发布文章
+ * @param {*} fd FormData类型的对象
+ * @returns Promise对象
+ */
+export const uploadArticleAPI = (fd) => {
+  return request({
+    url: '/my/article/add',
+    method: 'POST',
+    // 如果data传入的是一个普通对象，axios会将其转换为json字符串
+    // 当前接口需要传入的body参数类型是multipart/form-data，需要传入HTML5的FormData类型的对象
+    data: fd
   })
 }

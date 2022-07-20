@@ -12,5 +12,5 @@ app.use(router)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-
+// 全局注册QuillEditor富文本编辑器组件
 app.mount('#app')

@@ -7,7 +7,7 @@
         <img src="@/assets/images/bnu_logo.png" alt="" class="logo" />
         <!-- <img src="@/assets/images/login_title.png" alt="" /> -->
         <!-- <span style="color: #fff; font-size: 30px;">学 生 论 坛 后 台 管 理 系 统</span> -->
-        <img src="@/assets/images/bnu_logo1.png" alt="" class="middle-logo">
+        <a href="https://www.bnu.edu.cn" style="display: block"><img src="@/assets/images/bnu_logo1.png" alt="" class="middle-logo"></a>
         <!-- 右侧菜单栏 -->
         <el-menu mode="horizontal" background-color="#104984" text-color="#fff"  active-text-color="#409EFF" :ellipsis="false" >
           <el-sub-menu index="1">
