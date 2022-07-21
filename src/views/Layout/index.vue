@@ -9,31 +9,31 @@
         <!-- <span style="color: #fff; font-size: 30px;">学 生 论 坛 后 台 管 理 系 统</span> -->
         <a href="https://www.bnu.edu.cn" style="display: block"><img src="@/assets/images/bnu_logo1.png" alt="" class="middle-logo"></a>
         <!-- 右侧菜单栏 -->
-        <el-menu mode="horizontal" background-color="#104984" text-color="#fff"  active-text-color="#409EFF" :ellipsis="false" >
-          <el-sub-menu index="1">
+        <el-menu mode="horizontal" background-color="#104984" text-color="#fff" router :default-active="path" active-text-color="#409EFF" :ellipsis="false" >
+          <el-sub-menu index="/">
             <template #title>
               <!-- 头像 -->
               <img v-if="userPic" :src="userPic" alt="" class="avatar" />
               <img v-else src="@/assets/images/avatar.jpg" alt="" class="avatar" />
               <span>个人中心</span>
             </template>
-            <el-menu-item index="/user-info">
+            <el-menu-item index="user-info">
               <el-icon>
                 <Operation />
               </el-icon><span>基本资料</span>
             </el-menu-item>
-            <el-menu-item index="/user-avatar">
+            <el-menu-item index="user-avatar">
               <el-icon>
                 <Camera />
               </el-icon><span>更换头像</span>
             </el-menu-item>
-            <el-menu-item index="/user-pwd">
+            <el-menu-item index="user-pwd">
               <el-icon>
                 <Key />
               </el-icon><span>重置密码</span>
             </el-menu-item>
           </el-sub-menu>
-          <el-menu-item index="2" @click="logoutFn">
+          <el-menu-item index="logout" @click="logoutFn">
             <el-icon>
               <SwitchButton />
             </el-icon><span>退出</span>
@@ -79,7 +79,7 @@
             <router-view></router-view>
           </el-main>
           <!-- 底部footer区域 -->
-          <el-footer>@ 北京师范大学 https://www.bnu.edu.cn</el-footer>
+          <el-footer>© 北京师范大学 https://www.bnu.edu.cn</el-footer>
         </el-container>
       </el-container>
     </el-container>

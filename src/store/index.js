@@ -5,7 +5,7 @@ export default createStore({
   state: {
     token: localStorage.getItem('token') || '',
     // 用户信息
-    userInfo: {}
+    userInfo: JSON.parse( localStorage.getItem('userInfo')) || {}
   },
   getters: {
     username: state => state.userInfo.username,
@@ -16,15 +16,17 @@ export default createStore({
     // 更新token
     updateToken(state, value) {
       state.token = value
-      this.commit('persistedState','token')
+      this.commit('persistedState', 'token')
     },
     // 持久化存储
     persistedState(state, value) {
-      localStorage.setItem(value, state[value])
+      localStorage.setItem(value, JSON.stringify(state[value]))
     },
     // 更新用户信息
     updateUserInfo(state, value) {
       state.userInfo = value
+      // 防止页面刷新导致用户信息丢失，需要对用户信息进行本地化存储
+      this.commit('persistedState', 'userInfo')
     }
   },
   actions: {

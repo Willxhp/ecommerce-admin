@@ -2,8 +2,10 @@ import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
 
+// 后端接口的根路径
+export const baseURL = 'http://big-event-vue-api-t.itheima.net'
 const myAxios = axios.create({
-  baseURL: 'http://big-event-vue-api-t.itheima.net'
+  baseURL
 })
 
 // 请求拦截器，用于给需要身份验证的接口添加Authorization请求头

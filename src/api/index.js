@@ -183,3 +183,49 @@ export const uploadArticleAPI = (fd) => {
     data: fd
   })
 }
+
+/**
+ * 获取文章列表
+ * @param {*} param0 { pagenum: 当前页码数, pagesize: 当前页面需要的数据条数, cate_id: 文章分类id, state: 文章状态 }
+ * @returns Promise对象
+ */
+export const getArtListAPI = ({ pagenum, pagesize, cate_id, state }) => {
+  return request({
+    url: '/my/article/list',
+    params: {
+      pagenum,
+      pagesize,
+      cate_id,
+      state
+    }
+  })
+}
+
+/**
+ * 获取文章详情
+ * @param {*} id 文章id值
+ * @returns Promise对象
+ */
+export const getArtDetailAPI = (id) => {
+  return request({
+    url: '/my/article/info',
+    params: {
+      id
+    }
+  })
+}
+
+/**
+ * 删除文章
+ * @param {*} id 文章id值
+ * @returns Promise对象
+ */
+export const deleteArtAPI = (id) => {
+  return request({
+    url: '/my/article/info',
+    method: 'DELETE',
+    params: {
+      id
+    }
+  })
+}

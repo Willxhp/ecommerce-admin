@@ -30,6 +30,10 @@ const routes = [
       {
         path: 'art-list',
         component: () => import('@/views/Article/ArtList.vue')
+      },
+      {
+        path: 'logout',
+        redirect: '/'
       }
     ],
   },
