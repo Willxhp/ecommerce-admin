@@ -114,20 +114,20 @@ let externals = {}
 let isProduction = process.env.NODE_ENV === 'production'
 // 判断是否为生产环境
 if (isProduction) {
-    externals = {
-    	vue: 'Vue',
-    	'vue-router': 'VueRouter',
-    	vuex: 'Vuex',
-    	dayjs: 'dayjs',
-    	axios: 'axios',
-    	echarts: 'echarts',
-    	'@vueup/vue-quill': 'VueQuill',
+  externals = {
+    vue: 'Vue',
+    'vue-router': 'VueRouter',
+    vuex: 'Vuex',
+    dayjs: 'dayjs',
+    axios: 'axios',
+    echarts: 'echarts',
+    '@vueup/vue-quill': 'VueQuill',
   }
 }
 module.exports = defineConfig({
-    configureWebpack: {
-        externals: externals
-    }
+  configureWebpack: {
+    externals: externals
+  }
 })
 ```
 
@@ -137,11 +137,11 @@ module.exports = defineConfig({
 
 ```js
 const routes = [
-    {
-        path: '/',
-        component: () => import('@/views/Layout'),
-        ...
-    }
+  {
+     path: '/',
+     component: () => import('@/views/Layout'),
+     ...
+  }
 ]
 ```
 
@@ -149,9 +149,9 @@ const routes = [
 
 ```vue
 <router-view v-slot="{Component}">
-	<keep-alive>
-		<component :is="Component"></component>
-    </keep-alive>
+  <keep-alive>
+    <component :is="Component"></component>
+  </keep-alive>
 </router-view>
 ```
 
@@ -168,10 +168,10 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 module.exports = defineConfig({
   configureWebpack: {
   	plugins: [
-  	  AutoImport({
+      AutoImport({
   	    resolvers: [ElementPlusResolver()],
   	  }),
-  	  Components({
+      Components({
   	    resolvers: [ElementPlusResolver()],
   	  }),
   	],
