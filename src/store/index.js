@@ -3,7 +3,8 @@ import { getUserInfoAPI } from '@/api'
 
 export default createStore({
   state: {
-    token: localStorage.getItem('token') || '',
+    // 存储的token字段，用于身份验证
+    token: JSON.parse(localStorage.getItem('token')) || '',
     // 用户信息
     userInfo: JSON.parse( localStorage.getItem('userInfo')) || {}
   },
