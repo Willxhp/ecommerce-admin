@@ -1,6 +1,6 @@
 # 后台管理项目说明
 
-本项目基于Vue3.0+Element Plus开发。技术栈：vueRouter，vuex，less，axios。
+项目采用的技术栈有Vue3.0，Element Plus，vueRouter，vuex，less，axios等。本项目为前后端分离的论坛文章后台管理系统，用户登录后可以查看文章数据、管理文章分类、发表新文章或对当前用户已发布的文章进行编辑。
 
 ## 项目架构
 
@@ -81,19 +81,100 @@ vue_management_system
 
 ### 布局页面Layout
 
-该页面是本项目的核心页面，使用Element plus的Container布局容器构建静态页面，页面采用`Header, Aside, Main, Footer`形式进行布局，用户主页等页面均作为二级路由展示在`Main`区域内。
+该页面是本项目的核心页面，使用Element Plus的Container布局容器构建静态页面，页面采用`Header, Aside, Main, Footer`形式进行布局，用户主页等页面均作为二级路由展示在`Main`区域内。`Aside`区域内采用Element Plus的Menu组件构建静态页面，可以显示当前用户的头像和用户名，若用户在信息页面编辑用户昵称后，将不再显示用户名，而是显示用户昵称。
 
-### 用户主页Home
+### 主页Home
 
-该页面作为Layout页面的二级子路由，
+该页面采用Echarts图表库对文章数据库中的数据进行可视化展示，如显示新增文章数、分类文章数量比等。
 
+### 文章分类页面ArtCate
 
+该页面使用Element Plus的Table组件构建静态页面，在该页面中用户可以添加文章的分类，或者对已有文章分类进行修改或删除。
+
+### 文章列表页面ArtList
+
+该页面使用Element Plus的Table组件构建静态页面，用于显示当前用户已发布或处于草稿状态下的文章列表，用户可以根据文章分类或发布状态对列表进行筛选。用户可以修改处于草稿状态下的文章内容，但不能修改已发布的文章，只能将其删除。在该页面中，用户可以点击右上角的发表文章按钮，借助VueQuill提供的富文本编辑器在线编辑文章并发布。发布文章时会对文章标题、文章分类、文章内容以及文章封面进行格式校验。用户可以通过点击列表中的文章标题对文章内容进行预览。
+
+### 用户页面User
+
+用户页面包含用户信息UserInfo，用户头像UserAvatar和用户密码UserPwd三个页面，均采用Element Plus的Form表单组件构建静态页面，可以更新用户昵称、用户邮箱和用户头像，或者对用户密码进行重置。
+
+## 网络请求管理
+
+本项目采用axios进行网络请求，首先封装了request请求函数并配置项目基地址，封装api统一接口方法，在逻辑页面，需要用到哪个接口就引入对应的接口方法，调用方法后等待请求后的结果返回，在逻辑页面使用后台返回的数据。
 
 ## 项目性能优化
 
 ### CDN加速
 
+项目中使用的第三方包，如vue，vuex，vuerouter，axios，echarts在生产环境下打包采用unpkg提供的CDN加速服务，减少打包后的项目体积，利用浏览器的缓存机制，可以提高页面的加载速度。
+
+```js
+let externals = {}
+let isProduction = process.env.NODE_ENV === 'production'
+// 判断是否为生产环境
+if (isProduction) {
+    externals = {
+    	vue: 'Vue',
+    	'vue-router': 'VueRouter',
+    	vuex: 'Vuex',
+    	dayjs: 'dayjs',
+    	axios: 'axios',
+    	echarts: 'echarts',
+    	'@vueup/vue-quill': 'VueQuill',
+  }
+}
+module.exports = defineConfig({
+    configureWebpack: {
+        externals: externals
+    }
+})
+```
+
+### 路由懒加载
+
+所有路由组件均采用懒加载的方式，只有在该路由被访问到时，才加载对应的组件，提高首屏加载的速度。使用`import()`动态导入的方式实现路由懒加载。
+
+```js
+const routes = [
+    {
+        path: '/',
+        component: () => import('@/views/Layout'),
+        ...
+    }
+]
+```
+
+路由组件使用`<keep-alive>`组件进行包裹，将组件进行缓存。
+
+```vue
+<router-view v-slot="{Component}">
+	<keep-alive>
+		<component :is="Component"></component>
+    </keep-alive>
+</router-view>
+```
+
 ### Element Plus组件按需引入
 
+使用`unplugin-vue-components` 和 `unplugin-auto-import`这两款插件实现组件的按需自动导入。可以减少项目打包体积并且无需在组件中频繁使用`import`引入语句来手动引入组件。
 
+```js
+// vue.config.js
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
+module.exports = defineConfig({
+  configureWebpack: {
+  	plugins: [
+  	  AutoImport({
+  	    resolvers: [ElementPlusResolver()],
+  	  }),
+  	  Components({
+  	    resolvers: [ElementPlusResolver()],
+  	  }),
+  	],
+  } 
+})
+```

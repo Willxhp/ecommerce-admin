@@ -9,7 +9,7 @@
         <!-- <span style="color: #fff; font-size: 30px;">学 生 论 坛 后 台 管 理 系 统</span> -->
         <a href="https://www.bnu.edu.cn" style="display: block"><img src="@/assets/images/bnu_logo1.png" alt="" class="middle-logo"></a>
         <!-- 右侧菜单栏 -->
-        <el-menu mode="horizontal" background-color="#104984" text-color="#fff" router :default-active="path" active-text-color="#409EFF" :ellipsis="false" >
+        <el-menu mode="horizontal" background-color="#104984" text-color="#fff" router :default-active="path" active-text-color="#409EFF" :ellipsis="false">
           <el-sub-menu index="/">
             <template #title>
               <!-- 头像 -->
@@ -76,7 +76,12 @@
         <el-container>
           <!-- 页面主体区域 -->
           <el-main>
-            <router-view></router-view>
+            <!-- 在Vue3中不能直接将router-view放入keep-alive中，需要采用以下写法 -->
+            <router-view v-slot="{Component}">
+              <keep-alive>
+                <component :is="Component"></component>
+              </keep-alive>
+            </router-view>
           </el-main>
           <!-- 底部footer区域 -->
           <el-footer>© 北京师范大学 https://www.bnu.edu.cn</el-footer>
