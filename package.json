@@ -1,5 +1,5 @@
 {
-  "name": "vue_management_system",
+  "name": "ecommerce-admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,18 +14,25 @@
     "dayjs": "^1.11.4",
     "echarts": "^5.3.3",
     "element-plus": "^2.2.9",
+    "gulp-sass": "^5.1.0",
+    "js-md5": "^0.7.3",
+    "node-sass": "^7.0.1",
+    "unplugin-icons": "^0.14.8",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "element-theme-chalk": "^2.15.9",
     "less": "^4.0.0",
     "less-loader": "^8.0.0",
-    "unplugin-auto-import": "^0.9.3",
+    "unplugin-auto-import": "^0.9.5",
+    "unplugin-element-plus": "^0.4.1",
     "unplugin-vue-components": "^0.21.1"
   }
 }

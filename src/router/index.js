@@ -1,50 +1,31 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '@/store'
 
+const Layout = () => import('@/views/layout')
+const Home = () => import('@/views/home')
+const AddGoods = () => import('@/views/add-goods')
+const Login = () => import('@/views/login')
+
 const routes = [
   {
     path: '/',
-    component: () => import('@/views/Layout'),
+    component: Layout,
     redirect: '/home',
     children: [
       {
         path: 'home',
-        component: () => import('@/views/Home'),
+        component: Home
       },
       {
-        path: 'user-info',
-        component: () => import('@/views/User/UserInfo.vue')
-      },
-      {
-        path: 'user-avatar',
-        component: () => import('@/views/User/UserAvatar.vue')
-      },
-      {
-        path: 'user-pwd',
-        component: () => import('@/views/User/UserPwd.vue')
-      },
-      {
-        path: 'art-cate',
-        component: () => import('@/views/Article/ArtCate.vue')
-      },
-      {
-        path: 'art-list',
-        component: () => import('@/views/Article/ArtList.vue')
-      },
-      {
-        path: 'logout',
-        redirect: '/'
+        path: 'addgoods',
+        component: AddGoods
       }
-    ],
-  },
-  {
-    path: '/register',
-    component: () => import('@/views/Register'),
+    ]
   },
   {
     path: '/login',
-    component: () => import('@/views/Login'),
-  },
+    component: Login
+  }
 ]
 
 const router = createRouter({
@@ -60,11 +41,8 @@ router.beforeEach((to, from, next) => {
   if (whiteList.includes(to.path)) {
     next()
   } else {
-    if (store.state.token) {
-      // 若用户已经登录且vuex中没有用户相关信息时，发送请求获取用户信息
-      if (!store.state.userInfo.username) {
-        store.dispatch('updateUserInfo')
-      }
+    // 否则检查是否有token，没有的token跳转至登录界面
+    if (store.state.user.token) {
       next()
     } else {
       // 使用next()指定路由进行跳转时会重新触发一次全局前置路由守卫，所以必须设立白名单防止陷入死递归

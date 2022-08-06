@@ -40,13 +40,17 @@ module.exports = defineConfig({
   transpileDependencies: true,
   // configureWebpack是对webpack的配置项进行修改，最终会合并到webpack的配置中
   configureWebpack: {
-    // 设置Element Plus的自动引入
     plugins: [
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          // 设置Element Plus的自动引入
+          ElementPlusResolver(),
+        ],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver(),
+        ],
       }),
     ],
     // externals用于配置忽略参与项目打包的第三方包，总而利用CDN实现dist文件夹瘦身和第三方包的加载加速

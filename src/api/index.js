@@ -1,36 +1,15 @@
-import request from '@/utils'
-import store from '@/store'
-
-/**
- * 注册接口
- * @param {*} param0 {username: 用户名, password: 密码, repassword: 确认密码}
- * @returns Promise对象
- */
-export const registerAPI = ({ username, password, repassword }) => {
-  return request({
-    url: 'api/reg',
-    method: 'POST',
-    data: {
-      username,
-      password,
-      repassword,
-    },
-  })
-}
+import request from '@/utils/request'
 
 /**
  * 登录接口
- * @param {*} param0 {username: 用户名, password: 密码}
+ * @param {Object} param0 信息对象{username: 用户名, passwordMd5: 密码}
  * @returns Promise对象
  */
-export const loginAPI = ({ username, password }) => {
+export const loginAPI = (adminLoginParam) => {
   return request({
-    url: 'api/login',
+    url: '/manage-api/v1/adminUser/login',
     method: 'POST',
-    data: {
-      username,
-      password,
-    },
+    data: adminLoginParam
   })
 }
 

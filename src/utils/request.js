@@ -3,7 +3,7 @@ import store from '@/store'
 import router from '@/router'
 
 // 后端接口的根路径
-export const baseURL = 'http://big-event-vue-api-t.itheima.net'
+export const baseURL = 'http://backend-api-02.newbee.ltd'
 const myAxios = axios.create({
   baseURL
 })
@@ -12,8 +12,8 @@ const myAxios = axios.create({
 myAxios.interceptors.request.use(
   config => {
     // 如果vuex中有token属性，说明此时已经登录
-    if (store.state.token) {
-      config.headers.Authorization = store.state.token
+    if (store.state.user.token) {
+      config.headers.Authorization = `Bearer ${store.state.user.token}`
     }
     return config
   },
@@ -23,13 +23,12 @@ myAxios.interceptors.request.use(
 // 响应拦截器，对token过期返回401状态码进行统一处理
 myAxios.interceptors.response.use(
   response => {
-    return response
+    return response.data
   },
   error => {
     // 返回401状态码说明token过期，清除vuex中保存的信息并且强制跳转至登录页面
-    if (error.response.status === 401 && (store.state.token || store.state.userInfo.username)) {
-      store.commit('updateToken', '')
-      store.commit('updateUserInfo', {})
+    if (error.response.status === 401 && store.state.user.token) {
+      store.commit('user/updateToken', '')
       router.push('/login')
       ElMessage.error('身份认证过期，请重新登录！')
     }
